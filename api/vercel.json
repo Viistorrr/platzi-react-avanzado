@@ -1,7 +1,5 @@
 {
   "version": 2,
-  "name": "petgram-viistorrr",
-  "alias": ["petgram-viistorrr-api"],
   "builds": [{ "src": "index.js", "use": "@now/node" }],
   "routes": [
     {
