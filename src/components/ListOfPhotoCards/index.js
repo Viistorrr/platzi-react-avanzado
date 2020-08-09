@@ -4,8 +4,8 @@ import { PhotoCard } from "../PhotoCard";
 export const ListOfPhotoCards = () => {
   return (
     <ul>
-      {[1, 2, 3, 4, 5].map(photoCard => (
-        <PhotoCard key={photoCard} />
+      {[1, 2, 3, 4, 5].map(id => (
+        <PhotoCard key={id} id={id} />
       ))}
     </ul>
   );
