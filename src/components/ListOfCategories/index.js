@@ -1,37 +1,60 @@
-import React, { Fragment, useState, useEffect } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import { Category } from "../Category";
+
 import { List, Item } from "./styles";
 
-export const ListOfCategories = () => {
-  const [categories, setCategories] = useState([]); //se inicializa con [] porque se sabe que retorna la App
-  const [showFixed, setShowFixed] = useState(false);
-
-  const renderList = fixed => (
-    <List className={fixed ? "fixed" : ""}>
-      {categories.map(category => (
-        <Item key={category.id}>
-          <Category {...category} />
-        </Item>
-      ))}
-    </List>
-  );
+function useCategoriesData() {
+  const [categories, setCategories] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   useEffect(function() {
-    fetch("https://viistorrr-petgram.viistorrr.vercel.app/categories")
+    setLoading(true);
+    window
+      .fetch("https://petgram-server-alpha.now.sh/categories")
       .then(res => res.json())
       .then(response => {
         setCategories(response);
+        setLoading(false);
       });
-  }, []); //Se debe solo cuando se monta el componente
+  }, []);
 
-  useEffect(function() {
-    const onScroll = e => {
-      const newShowFixed = window.scrollY > 200;
-      showFixed !== newShowFixed && setShowFixed(newShowFixed);
-    };
-    document.addEventListener("scroll", onScroll);
-    return () => document.removeEventListener("scroll", onScroll); //detener el listener del evento en  la ventana
-  });
+  return { categories, loading };
+}
+
+export const ListOfCategories = () => {
+  const { categories, loading } = useCategoriesData();
+  const [showFixed, setShowFixed] = useState(false);
+
+  useEffect(
+    function() {
+      const onScroll = e => {
+        const newShowFixed = window.scrollY > 200;
+        showFixed !== newShowFixed && setShowFixed(newShowFixed);
+      };
+
+      document.addEventListener("scroll", onScroll);
+
+      return () => document.removeEventListener("scroll", onScroll);
+    },
+    [showFixed]
+  );
+
+  const renderList = fixed => (
+    <List fixed={fixed}>
+      {loading ? (
+        <Item key="loading">
+          <Category />
+        </Item>
+      ) : (
+        categories.map(category => (
+          <Item key={category.id}>
+            <Category {...category} />
+          </Item>
+        ))
+      )}
+    </List>
+  );
+
   return (
     <Fragment>
       {renderList()}
