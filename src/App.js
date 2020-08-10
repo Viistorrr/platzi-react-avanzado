@@ -1,8 +1,7 @@
-import React, { Fragment } from "react";
-import { ListOfCategories } from "./components/ListOfCategories";
+import React from "react";
 import { GlobalStyle } from "./styles/GlobalStyles";
-import { ListOfPhotoCards } from "./container/ListOfPhotoCards";
 import { PhotoCardWithQuery } from "./container/PhotoCardWithQuery";
+import { Home } from "./pages/Home";
 import Logo from "./components/Logo";
 
 export const App = () => {
@@ -13,14 +12,7 @@ export const App = () => {
     <div>
       <GlobalStyle />
       <Logo />
-      {detailId ? (
-        <PhotoCardWithQuery id={detailId} />
-      ) : (
-        <Fragment>
-          <ListOfCategories />
-          <ListOfPhotoCards categoryId={2} />
-        </Fragment>
-      )}
+      {detailId ? <PhotoCardWithQuery id={detailId} /> : <Home />}
     </div>
   );
 };
