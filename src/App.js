@@ -1,6 +1,6 @@
 import React from "react";
 import { GlobalStyle } from "./styles/GlobalStyles";
-import { PhotoCardWithQuery } from "./container/PhotoCardWithQuery";
+import { Detail } from "./pages/Detail";
 import { Home } from "./pages/Home";
 import Logo from "./components/Logo";
 
@@ -14,14 +14,11 @@ export const App = () => {
     <div>
       <GlobalStyle />
       <Logo />
-      {detailId ? (
-        <PhotoCardWithQuery id={detailId} />
-      ) : (
-        <Router>
-          <Home path="/" />
-          <Home path="/pet/:categoryId" />
-        </Router>
-      )}
+      <Router>
+        <Home path="/" />
+        <Home path="/pet/:categoryId" />
+        <Detail path="detail/:detailId" />
+      </Router>
     </div>
   );
 };
