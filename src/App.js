@@ -9,10 +9,7 @@ import { NavBar } from "./components/NavBar";
 import Logo from "./components/Logo";
 
 import { Router } from "@reach/router";
-
-const UserLogged = ({ children }) => {
-  return children({ isAuth: false });
-};
+import Context from "./Context";
 
 export const App = () => {
   const urlParams = new window.URLSearchParams(window.location.search);
@@ -27,7 +24,7 @@ export const App = () => {
         <Home path="/pet/:categoryId" />
         <Detail path="/detail/:detailId" />
       </Router>
-      <UserLogged>
+      <Context.Consumer>
         {({ isAuth }) =>
           isAuth ? (
             <Router>
@@ -41,7 +38,7 @@ export const App = () => {
             </Router>
           )
         }
-      </UserLogged>
+      </Context.Consumer>
       <NavBar />
     </div>
   );
