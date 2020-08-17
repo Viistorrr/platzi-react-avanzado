@@ -41,7 +41,7 @@ export const PhotoCard = ({ id, liked, likes = 0, src }) => {
   );
 };
 
-Photocard.propTypes = {
+PhotoCard.propTypes = {
   id: PropTypes.string.isRequired,
   liked: PropTypes.bool.isRequired,
   src: PropTypes.string.isRequired,
